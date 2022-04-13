@@ -1,6 +1,9 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import { useEffect, useState } from 'react'
+import styled from 'styled-components'
+import Navbar from '../components/Navbar'
+import WineCard from '../components/WineCard'
 import api from './api/api'
 
 interface IWines {
@@ -40,13 +43,25 @@ const Home: NextPage = () => {
         <title>Wine</title>
       </Head>
 
-      <main>
+      <Navbar />
+      <Main>
         { wines.map((wine) => {
-          return <h3 key={ wine.id }>{ wine.name }</h3>
+          return <WineCard key={ wine.id } wine={ wine } />
         }) }
-      </main>
+      </Main>
     </div>
   )
 }
 
 export default Home
+
+const Main = styled.main`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  margin-top: 70px;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 900px;
+`
