@@ -1,9 +1,11 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, ChangeEventHandler } from 'react'
 import styled from 'styled-components'
 import Navbar from '../components/Navbar'
 import WineCard from '../components/WineCard'
+import Pagination from '@mui/material/Pagination';
+import Stack from '@mui/material/Stack'
 import api from './api/api'
 
 interface IWines {
@@ -27,10 +29,10 @@ interface IWines {
 
 const Home: NextPage = () => {
   const [wines, setWines] = useState<IWines[]>([])
-  const [page, setPage] = useState<Number>(1)
+  const [page, setPage] = useState<number>(1)
 
   useEffect(() => {
-    api.get(`products?page=${page}&limit=10`).then(response => {
+    api.get(`products?page=${page}&limit=9`).then(response => {
       setWines(response.data.items)
       console.log(response.data);
       
@@ -49,6 +51,14 @@ const Home: NextPage = () => {
           return <WineCard key={ wine.id } wine={ wine } />
         }) }
       </Main>
+      <PagDiv>
+        <Pagination 
+          onChange={ (_event, page) => setPage(page) }
+          count={7}
+          color="secondary"
+          shape="rounded"
+        />
+      </PagDiv>
     </div>
   )
 }
@@ -64,4 +74,10 @@ const Main = styled.main`
   margin-left: auto;
   margin-right: auto;
   max-width: 900px;
+`
+
+const PagDiv = styled.div`
+  display: flex;
+  margin: 20px auto ;
+  justify-content: center;
 `
