@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 import styled from "styled-components";
 
@@ -36,35 +37,39 @@ const WineCard: React.FC<Props> = ({ wine }) => {
 
   return (
     <Card>
-      <WineImage
-        src={ wine.image }
-        alt={ wine.name }
-      />
-      <p>{ wine.name }</p>
-      <div>
-        <Price>
-          { `R$${ wine.price.toLocaleString('pt-br', {minimumFractionDigits: 2}) }` }
-        </Price>
-        <Discount>
-          { `${ wine.discount }% OFF` }
-        </Discount>
-      </div>
-      <PriceMember>
-        { 'SÓCIO WINE ' }
-        <span>
-          R$
-          <span>
-            { memberPrice[0] },
-          </span>
-          { memberPrice[1] || 0 }
-        </span>
-        </PriceMember>
-      <PriceNonMember>
-        NÃO SÓCIO 
-        <span>
-          { ` R$${ wine.priceNonMember.toLocaleString('pt-br', {minimumFractionDigits: 2}) }` }
-        </span>
-      </PriceNonMember>
+      <Link href={`/${wine.id}`} passHref>
+        <MainInfo>
+          <WineImage
+            src={ wine.image }
+            alt={ wine.name }
+          />
+          <p>{ wine.name }</p>
+          <div>
+            <Price>
+              { `R$${ wine.price.toLocaleString('pt-br', {minimumFractionDigits: 2}) }` }
+            </Price>
+            <Discount>
+              { `${ wine.discount }% OFF` }
+            </Discount>
+          </div>
+          <PriceMember>
+            { 'SÓCIO WINE ' }
+            <span>
+              R$
+              <span>
+                { memberPrice[0] },
+              </span>
+              { memberPrice[1] || 0 }
+            </span>
+          </PriceMember>
+          <PriceNonMember>
+            NÃO SÓCIO 
+            <span>
+              { ` R$${ wine.priceNonMember.toLocaleString('pt-br', {minimumFractionDigits: 2}) }` }
+            </span>
+          </PriceNonMember>
+        </MainInfo>
+      </Link>
       <BtnAdd>
         ADICIONAR
       </BtnAdd>
@@ -81,11 +86,8 @@ const Card = styled.div`
   text-align: center;
   align-items: center;
   width: 250px;
-  height: 350px;
+  height: 400px;
   margin: 10px;
-  background-color: #FFF;
-  border-radius: 15px;
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 `
 
 const WineImage = styled.img`
@@ -121,10 +123,32 @@ const PriceNonMember = styled.p`
   color: gray;
   margin-top: 0px;
 `
+
 const BtnAdd = styled.button`
   width: 250px;
   height: 35px;
+  border: none;
   border-radius: 5px;
+  margin-top: 8px;
   color: #FFF;
-  background-color: #369f36
+  background-color: #369f36;
+  cursor: pointer;
+`
+
+const MainInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-align: center;
+  align-items: center;
+  background-color: #FFF;
+  border-radius: 15px;
+  width: 250px;
+  height: 350px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  cursor: pointer;
+
+  :hover {
+    box-shadow: rgba(0, 0, 0, 0.7) 0px 3px 8px;
+  }
 `
