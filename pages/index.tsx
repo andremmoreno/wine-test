@@ -38,11 +38,16 @@ const Home: NextPage = () => {
   const [data, setData] = useState<IData>();
   const [page, setPage] = useState<number>(1);
   const [filter, setFilter] = useState<string>('');
+  const [cart, setCart] = useState<IWines[]>([])
 
   useEffect(() => {
     api.get(`products?page=${page}&limit=9&filter=${filter}`).then(response => {
       setData(response.data);
     })
+    const products = localStorage.getItem('cart')
+    if (products) {
+      setCart(JSON.parse(products as string));
+    }
     window.scrollTo(0, 0);
   }, [page, filter])
 
@@ -51,13 +56,13 @@ const Home: NextPage = () => {
       <Head>
         <title>Wine</title>
       </Head>
-      <Navbar />
+      <Navbar cart={ cart } setCart={ setCart } />
       <Filter setFilter={ setFilter } setPage={ setPage }/>
       <Main>
-        <ProductsCount><strong>{ `${data?.totalItems} ` }</strong>produtos encontrados</ProductsCount>
+        <ProductsCount><strong>{ `${data?.totalItems || ''} ` }</strong>produtos encontrados</ProductsCount>
         <CardSection>
           { data?.items.map((wine) => {
-            return <WineCard key={ wine.id } wine={ wine } />
+            return <WineCard key={ wine.id } wine={ wine } setCart={ setCart } />
           }) }
         </CardSection>
         <PagDiv>

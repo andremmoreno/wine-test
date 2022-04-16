@@ -25,6 +25,8 @@ interface IWines {
   size: string,
   sommelierComment: string,
   type: string,
+  volume?: string,
+  quantity?: number,
 }
 
 interface IQuery {
@@ -33,6 +35,7 @@ interface IQuery {
 
 const Home: NextPage = () => {
   const [wine, setWine] = useState<IWines>();
+  const [cart, setCart] = useState<IWines[]>([])
   const [quantity, setQuantity] = useState<number>(0);
   const { query } = useRouter();
   const { id } = query;
@@ -42,10 +45,36 @@ const Home: NextPage = () => {
       const wineDetails = response.data.items[parseInt(id as string)]
       setWine(wineDetails)
     })
+
+    const products = localStorage.getItem('cart')
+    if (products) {
+      setCart(JSON.parse(products as string));
+    }
   }, [id])
 
   const handleClick = (num: number) => {
     setQuantity((prevState) => prevState + num)
+  }
+
+  const addToCart = (wine: IWines) => {
+    const cart = localStorage.getItem("cart");
+    let a: IWines[] = [];
+    a = JSON.parse(cart as string) || [];
+
+    if (!a.find((each) => each.id === wine.id )) {
+      (wine.quantity as number) = quantity;
+      a.push(wine);
+    } 
+    else {
+      a.find((each) => {
+        if (each.id === wine.id) {
+          (each.quantity as number) += quantity;
+        }
+      })
+    }
+    setQuantity(0);
+    localStorage.setItem('cart', JSON.stringify(a));
+    setCart(a);
   }
 
   return (
@@ -53,7 +82,7 @@ const Home: NextPage = () => {
       <Head>
         <title>Wine</title>
       </Head>
-      <Navbar />
+      <Navbar cart={ cart } setCart={ setCart } />
       <Main>
         <Link href='/' passHref>
           <BackBtn>{ '< Voltar' }</BackBtn>
@@ -68,7 +97,7 @@ const Home: NextPage = () => {
               <InfoText>{ wine?.country }</InfoText>
               <InfoText>{ wine?.type }</InfoText>
               <InfoText>{ wine?.classification }</InfoText>
-              <InfoText>{ wine?.size }</InfoText>
+              <InfoText>{ wine?.size || wine?.volume }</InfoText>
               <div>
                 <Rating
                   value={ wine?.rating || 0 }
@@ -141,7 +170,9 @@ const Home: NextPage = () => {
                   +
                 </button>
               </CountInput>
-              <BtnAdd>
+              <BtnAdd
+                onClick={ () => addToCart(wine as IWines) }
+              >
                 ADICIONAR
               </BtnAdd>
             </AddCartDiv>
@@ -246,7 +277,7 @@ const CountryImg = styled.img`
 `
 
 const PriceMember = styled.h2`
-  color: #af03af;
+  color: #B6116E;
   margin-bottom: 0px;
   span {
     font-size: 30px;

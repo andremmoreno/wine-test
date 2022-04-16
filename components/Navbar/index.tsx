@@ -3,8 +3,33 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { Avatar } from "@mui/material";
 import Cart from "../Cart";
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
-const Navbar: React.FC = () => {
+interface IWines {
+  avaliations: number,
+  classification: string,
+  country: string,
+  discount: number,
+  flag: string,
+  id: number,
+  image: string,
+  name: string,
+  price: number,
+  priceMember: number,
+  priceNonMember: number,
+  rating: number,
+  region: string,
+  size: string,
+  sommelierComment: string,
+  type: string,
+}
+
+interface Props {
+  cart: IWines[],
+  setCart: Function,
+}
+
+const Navbar: React.FC<Props> = ({ cart, setCart }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [isOpenCart, setIsOpenCart] = useState<boolean>(false);
   return (
@@ -21,11 +46,9 @@ const Navbar: React.FC = () => {
       </NavDiv>
       <UserDivCel>
         <Avatar />
-        <button
+        <CartBtn
           onClick={ () => setIsOpenCart(true) }
-        >
-          Cart
-        </button>
+        />
       </UserDivCel>
 
       <Menu isOpen={isOpen}>
@@ -37,13 +60,16 @@ const Navbar: React.FC = () => {
       </Menu>
       <UserDiv>
         <Avatar />
-        <button
+        <CartBtn
           onClick={ () => setIsOpenCart(true) }
-        >
-          Cart
-        </button>
+        />
       </UserDiv>
-      <Cart isOpenCart={ isOpenCart } setIsOpenCart={ setIsOpenCart } />
+      <Cart 
+        isOpenCart={ isOpenCart }
+        setIsOpenCart={ setIsOpenCart }
+        cart={ cart }
+        setCart={ setCart }
+      />
     </Nav>
   );
 };
@@ -150,6 +176,17 @@ const UserDivCel = styled.div`
   @media (max-width: 800px) {
     display: flex;
   }
+`
+
+const CartBtn = styled(ShoppingCartIcon)`
+  color: gray;
+  cursor: pointer;
+  border: 1px solid gray;
+  border-radius: 50%;
+  font-size: 42px;
+  padding: 3px;
+  margin-top: auto;
+  margin-bottom: auto;
 `
 
 const UserDiv = styled.div`

@@ -19,21 +19,38 @@ interface IWines {
   size: string,
   sommelierComment: string,
   type: string,
+  quantity?: number,
 }
 
 interface Props {
   wine: IWines,
+  setCart: Function,
 }
 
-interface ILoader {
-  src: string,
-  width: number,
-  quality: number,
-}
-
-const WineCard: React.FC<Props> = ({ wine }) => {
+const WineCard: React.FC<Props> = ({ wine, setCart }) => {
   const memberPrice: string[] = wine.priceMember
     .toLocaleString('pt-BR', { minimumFractionDigits: 2 }).split(',')
+
+  const addToCart = (wine: IWines) => {
+    const cart = localStorage.getItem("cart");
+    let a: IWines[] = [];
+    a = JSON.parse(cart as string) || [];
+
+    if (!a.find((each) => each.id === wine.id )) {
+      (wine.quantity as number) = 1
+      a.push(wine);
+    } 
+    else {
+      a.find((each) => {
+        if (each.id === wine.id) {
+          (each.quantity as number) += 1
+        }
+      })
+    }
+
+    localStorage.setItem('cart', JSON.stringify(a));
+    setCart(a);
+  }
 
   return (
     <Card>
@@ -70,7 +87,9 @@ const WineCard: React.FC<Props> = ({ wine }) => {
           </PriceNonMember>
         </MainInfo>
       </Link>
-      <BtnAdd>
+      <BtnAdd
+        onClick={ () => addToCart(wine) }
+      >
         ADICIONAR
       </BtnAdd>
     </Card>
@@ -110,7 +129,7 @@ const Discount = styled.span`
 const PriceMember = styled.p`
   font-size: 12px;
   span {
-    color: #af03af;
+    color: #B6116E;
     font-size: 12px;
     span {
       font-size: 24px;
@@ -120,7 +139,7 @@ const PriceMember = styled.p`
 
 const PriceNonMember = styled.p`
   font-size: 12px;
-  color: gray;
+  color: #999999;
   margin-top: 0px;
 `
 
@@ -133,6 +152,10 @@ const BtnAdd = styled.button`
   color: #FFF;
   background-color: #369f36;
   cursor: pointer;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  :hover {
+    box-shadow: rgba(0, 0, 0, 0.7) 0px 3px 8px;
+  }
 `
 
 const MainInfo = styled.div`
