@@ -1,6 +1,7 @@
 import Link from "next/link";
 import React from "react";
 import styled from "styled-components";
+import swal from 'sweetalert';
 
 interface IWines {
   avaliations: number,
@@ -50,6 +51,11 @@ const WineCard: React.FC<Props> = ({ wine, setCart }) => {
 
     localStorage.setItem('cart', JSON.stringify(a));
     setCart(a);
+    swal({
+      title: "Adicionado!",
+      text: "Item adicionado no carrinho!",
+      icon: "success",
+    });
   }
 
   return (

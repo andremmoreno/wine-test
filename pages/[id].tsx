@@ -7,6 +7,7 @@ import { useRouter } from 'next/router'
 import api from './api/api'
 import Link from 'next/link'
 import Rating from '@mui/material/Rating';
+import swal from 'sweetalert';
 
 interface IWines {
   avaliations: number,
@@ -75,6 +76,11 @@ const Details: NextPage = () => {
     setQuantity(0);
     localStorage.setItem('cart', JSON.stringify(a));
     setCart(a);
+    swal({
+      title: "Adicionado!",
+      text: "Item adicionado no carrinho!",
+      icon: "success",
+    });
   }
 
   return (
@@ -171,6 +177,7 @@ const Details: NextPage = () => {
                 </button>
               </CountInput>
               <BtnAdd
+                disabled={ quantity === 0 }
                 onClick={ () => addToCart(wine as IWines) }
               >
                 ADICIONAR
