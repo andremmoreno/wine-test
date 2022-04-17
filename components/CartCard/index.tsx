@@ -54,8 +54,15 @@ const CartCard: React.FC<Props> = ({ wine, cart, setCart, setTotalPrice, setTota
     setCart(cart);
   };
 
+  const deleteFromCart = (id: number) => {
+    const newCart = cart.filter((each) => each.id !== id);
+
+    setCart(newCart);
+    localStorage.setItem('cart', JSON.stringify(newCart));
+  }
+
   return (
-    <Card>
+    <Card data-testid={`card-cart-test-${wine.id}`}>
         <MainInfo>
           <Link href={`/${wine.id}`} passHref>  
             <WineImage
@@ -64,7 +71,14 @@ const CartCard: React.FC<Props> = ({ wine, cart, setCart, setTotalPrice, setTota
             />
           </Link>
           <Info>
-            <span>{ wine.name }</span>
+            <TopInfo>
+              <span>{ wine.name }</span>
+              <DeleteBtn
+                onClick={ () => deleteFromCart(wine.id) }
+              >
+                X
+              </DeleteBtn>
+            </TopInfo>
             <span>{ wine.size || wine.volume }</span>
             <Country>{ wine.country }</Country>
             <PriceQuantity>
@@ -75,7 +89,9 @@ const CartCard: React.FC<Props> = ({ wine, cart, setCart, setTotalPrice, setTota
               > 
                 -
               </button>
-              <span>{ `${ prductQt }` }</span>
+              <span data-testid={`product-qnt-${wine.id}`}>
+                { `${ prductQt }` }
+              </span>
               <button
                 onClick={ () => handleClick(wine.id, 1) }
               >
@@ -186,4 +202,16 @@ const CountInput = styled.div`
       color: #000000;
     }
   }
+`
+const DeleteBtn = styled.button`
+  border-radius: 50%;
+  color: #666666;
+  border: 1px solid #666666;
+  padding: 2px 4px;
+`
+
+const TopInfo = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
 `

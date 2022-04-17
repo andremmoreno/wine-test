@@ -53,7 +53,7 @@ const WineCard: React.FC<Props> = ({ wine, setCart }) => {
   }
 
   return (
-    <Card>
+    <Card data-testid={`card-test-${wine.id}`}>
       <Link href={`/${wine.id}`} passHref>
         <MainInfo>
           <WineImage
@@ -74,9 +74,9 @@ const WineCard: React.FC<Props> = ({ wine, setCart }) => {
             <span>
               R$
               <span>
-                { memberPrice[0] },
+                { memberPrice[0] }
               </span>
-              { memberPrice[1] || 0 }
+              ,{ memberPrice[1] || 0 }
             </span>
           </PriceMember>
           <PriceNonMember>
@@ -149,6 +149,7 @@ const BtnAdd = styled.button`
   border: none;
   border-radius: 5px;
   margin-top: 8px;
+  margin-bottom: 12px;
   color: #FFF;
   background-color: #369f36;
   cursor: pointer;

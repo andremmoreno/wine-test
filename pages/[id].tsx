@@ -33,7 +33,7 @@ interface IQuery {
   id: number,
 }
 
-const Home: NextPage = () => {
+const Details: NextPage = () => {
   const [wine, setWine] = useState<IWines>();
   const [cart, setCart] = useState<IWines[]>([])
   const [quantity, setQuantity] = useState<number>(0);
@@ -184,7 +184,7 @@ const Home: NextPage = () => {
   )
 }
 
-export default Home
+export default Details
 
 const Main = styled.main`
   display: flex;

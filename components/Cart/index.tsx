@@ -47,7 +47,7 @@ const Cart: React.FC<Props> = ({ isOpenCart, setIsOpenCart, cart, setCart }) => 
         isOpenCart={ isOpenCart }
         onClick={ () => setIsOpenCart(false) }
       />
-      <CardSide isOpenCart={ isOpenCart }>
+      <CardSide data-testid="cart-side" isOpenCart={ isOpenCart }>
         <div>
           <CloseCart
             onClick={ () => setIsOpenCart(false) }
@@ -108,6 +108,9 @@ const CardSide = styled.div<ICart>`
   top: 0;
   right:0;
   z-index: 1;
+  @media (max-width: 1300px) {
+    width: 40%;
+  }
   @media (max-width: 800px) {
     width: 80%;
   }

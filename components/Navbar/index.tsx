@@ -51,7 +51,7 @@ const Navbar: React.FC<Props> = ({ cart, setCart }) => {
         />
       </UserDivCel>
 
-      <Menu isOpen={isOpen}>
+      <Menu data-testid="nav-menu" isOpen={isOpen}>
         <MenuLink>Clube</MenuLink>
         <CurrentLink href="/">Loja</CurrentLink>
         <MenuLink>Produtores</MenuLink>
@@ -61,6 +61,7 @@ const Navbar: React.FC<Props> = ({ cart, setCart }) => {
       <UserDiv>
         <Avatar />
         <CartBtn
+          data-testid='cart-btn'
           onClick={ () => setIsOpenCart(true) }
         />
       </UserDiv>
