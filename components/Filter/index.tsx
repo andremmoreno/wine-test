@@ -5,22 +5,35 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
+import TextField from "@mui/material/TextField";
 
 interface Props {
   setFilter: Function,
   setPage: Function,
+  setName: Function,
 }
 
-const Filter: React.FC<Props> = ({ setFilter, setPage }) => {
+const Filter: React.FC<Props> = ({ setFilter, setPage, setName }) => {
 
   const handleChange = (value: string) => {
     setFilter(value);
     setPage(1);
   }
 
+  const handleChangeName = (value: string) => {
+    setName(value);
+    setPage(1);
+  }
+
   return (
     <Main>
       <h3>Refine sua busca</h3>
+      <TextField 
+        id="outlined-basic"
+        label="Pesquisar"
+        variant="outlined"
+        onChange={ (event) => handleChangeName(event.target.value)}
+      />
       <FormControl>
         <FormLabel id="demo-radio-buttons-group-label">Por preço</FormLabel>
         <RadioGroup
@@ -43,6 +56,8 @@ const Filter: React.FC<Props> = ({ setFilter, setPage }) => {
 export default Filter
 
 const Main = styled.div`
+  display: flex;
+  flex-direction: column;
   margin-left: 10%;
   float: left; 
 
