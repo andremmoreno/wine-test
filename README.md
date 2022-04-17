@@ -18,7 +18,7 @@ O projeto consiste em um e-commerce para venda de vinhos com as seguintes funcio
 
 4. Inicie o projeto
 - `npm run dev` 
-- Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- Abra [http://localhost:3000](http://localhost:3000) no browser.
 
 # Deploy 
 
