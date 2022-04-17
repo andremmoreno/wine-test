@@ -1,7 +1,5 @@
 # Contexto
 
-![Protótipo](https://firebasestorage.googleapis.com/v0/b/teste-upload-b324a.appspot.com/o/Captura%20de%20Tela%202021-11-01%20a%CC%80s%2014.44.04.png?alt=media&token=92acea99-9f2d-46b5-bced-4b384acf808f)
-
 O projeto consiste em um e-commerce para venda de vinhos com as seguintes funcionalidades:
 - Catálogo de produtos com paginação
 - Filtragem produtos por preço
