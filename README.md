@@ -8,7 +8,7 @@ O projeto consiste em um e-commerce para venda de vinhos com as seguintes funcio
 # Instruções do projeto:
 
 1. Clone o repositório
-- `git clone git@github.com:andremmoreno/KPI-test.git`.
+- `git clone git@github.com:andremmoreno/wine-test.git`.
 
 2. Entrar na pasta
 - `cd wine-test`
